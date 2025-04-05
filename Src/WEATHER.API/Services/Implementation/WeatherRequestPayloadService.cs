@@ -12,11 +12,12 @@ namespace WEATHER.API.Services.Implementation
         private readonly BlobServiceClient _blobServiceClient;
         private readonly string BlobContainerName;
 
-        public WeatherRequestPayloadService(ILogger<ScheduledWeatherFetcherFunction> logger)
+        public WeatherRequestPayloadService(ILogger<ScheduledWeatherFetcherFunction> logger,
+            BlobServiceClient blobServiceClient)
         {
             _logger = logger;
             var storageConnectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
-            _blobServiceClient = new BlobServiceClient(storageConnectionString);
+            _blobServiceClient = blobServiceClient;
             BlobContainerName = Environment.GetEnvironmentVariable("WeatherBlobContainerName");
         }
 

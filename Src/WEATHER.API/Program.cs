@@ -1,3 +1,5 @@
+using Azure.Data.Tables;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +13,19 @@ var builder = FunctionsApplication.CreateBuilder(args);
 builder.ConfigureFunctionsWebApplication();
 builder.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
+//one of options how to handle TableClient
+builder.Services.AddSingleton<TableClient>(sp =>
+{
+    var storageConnectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+    var tableName = Environment.GetEnvironmentVariable("WeatherTableName");
+    return new TableClient(storageConnectionString, tableName);
+});
+
+builder.Services.AddSingleton(sp =>
+{
+    var storageConnectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+    return new BlobServiceClient(storageConnectionString);
+});
 
 // Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
 // builder.Services

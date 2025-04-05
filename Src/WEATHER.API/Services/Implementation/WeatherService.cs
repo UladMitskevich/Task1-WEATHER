@@ -8,15 +8,13 @@ namespace WEATHER.API.Services.Implementation
 {
     public class WeatherService : IWeatherService
     {
-        private readonly ILogger<ScheduledWeatherFetcherFunction> _logger;
+        private readonly ILogger<WeatherService> _logger;
         private readonly TableClient _tableClient;
 
-        public WeatherService(ILogger<ScheduledWeatherFetcherFunction> logger)
+        public WeatherService(ILogger<WeatherService> logger, TableClient tableClient)
         {
             _logger = logger;
-            var storageConnectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
-            var tableName = Environment.GetEnvironmentVariable("WeatherTableName");
-            _tableClient = new TableClient(storageConnectionString, tableName);
+            _tableClient = tableClient;
         }
 
         public async Task CreateAsync(string partitionName, string rowKey, string status, string payloadReference)
