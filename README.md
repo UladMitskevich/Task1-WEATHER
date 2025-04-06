@@ -63,3 +63,9 @@ WeatherRequests
 Payloads
 ![image](https://github.com/user-attachments/assets/e98357a9-fe33-446e-b88b-a5dc10752c74)
 
+## Unit Tests
+Added some Unit Tests.
+
+![image](https://github.com/user-attachments/assets/6001e574-c8f1-4542-992b-130670857348)
+
+
